@@ -361,7 +361,12 @@ do
       changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
     },
   }
+  vim.pack.add {
+    { src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim' },
+  }
+  require('render-markdown').setup {}
 
+  vim.pack.add { { src = 'https://github.com/towolf/vim-helm' } }
   -- Useful plugin to show you pending keybinds.
   vim.pack.add { gh 'folke/which-key.nvim' }
   require('which-key').setup {
