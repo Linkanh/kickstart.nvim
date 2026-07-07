@@ -687,16 +687,30 @@ do
   ---@type table<string, vim.lsp.Config>
   local servers = {
     -- clangd = {},
-    -- gopls = {},
+
     -- pyright = {},
     -- rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
-    --
+    --u
     -- But for many setups, the LSP (`ts_ls`) will work just fine
     -- ts_ls = {},
-
+    gopls = {},
+    terraformls = {},
+    dockerls = {},
+    bashls = {},
+    jsonls = {},
+    helm_ls = {},
+    yamlls = {
+      settings = {
+        yaml = {
+          schemas = {
+            kubernetes = { '*.k8s.yaml', 'manifests/*.yaml', 'k8s/**/*.yaml' },
+          },
+        },
+      },
+    },
     stylua = {}, -- Used to format Lua code
 
     -- Special Lua Config, as recommended by neovim help docs
@@ -753,9 +767,17 @@ do
   -- You can press `g?` for help in this menu.
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
-    -- You can add other tools here that you want Mason to install
+    'stylua',
+    'gofumpt',
+    'goimports',
+    'delve',
+    'prettier',
+    'shfmt',
+    'golangci-lint',
+    'yamllint',
+    'tflint',
+    'shellcheck',
   })
-
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
   for name, server in pairs(servers) do
@@ -960,9 +982,10 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug'
+
+  require 'kickstart.plugins.debug'
   -- require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint'
+  require 'kickstart.plugins.lint'
   -- require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'
   -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
@@ -970,7 +993,7 @@ do
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- require 'custom.plugins'
+  require 'custom.plugins'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
